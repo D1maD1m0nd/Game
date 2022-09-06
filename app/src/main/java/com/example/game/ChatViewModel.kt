@@ -1,5 +1,6 @@
 package com.example.game
 
+import androidx.compose.runtime.toMutableStateList
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -7,7 +8,8 @@ import kotlinx.coroutines.launch
 
 class ChatViewModel : ViewModel() {
     val textLiveData = MutableLiveData("")
-    val listLiveData = MutableLiveData<MutableList<String>>()
+    private val listLiveData = ArrayList<String>().toMutableStateList()
+    val list : List<String> get() = listLiveData
     private val messages = ArrayList<String>()
     fun setMessage(text : String) {
         viewModelScope.launch {
@@ -17,8 +19,7 @@ class ChatViewModel : ViewModel() {
 
     fun addMessage(text : String) {
         viewModelScope.launch {
-            messages.add(text)
-            listLiveData.value = messages
+            listLiveData.add(text)
         }
     }
 }

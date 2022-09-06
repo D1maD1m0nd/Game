@@ -11,6 +11,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.*
 import androidx.compose.runtime.*
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.sp
 import com.example.game.ui.theme.GameTheme
@@ -28,12 +29,7 @@ class MainActivity : ComponentActivity(), MessageListener {
         WebSocketManager.init(serverUrl, this)
         setContent {
             GameTheme {
-                var list by remember { mutableStateOf<List<String>>(listOf()) }
-                var size by remember { mutableStateOf(list.size)}
-                viewModel.listLiveData.observe(this) {
-                    size = it.size
-                    list = it
-                }
+
                 // A surface container using the 'background' color from the theme
                 Surface(
                     modifier = Modifier.fillMaxSize(),
@@ -46,7 +42,7 @@ class MainActivity : ComponentActivity(), MessageListener {
                             SendMessageButton()
                         }
                         SimpleOutlinedTextFieldSample()
-                        MessageList(list, size)
+                        MessageList(viewModel.list)
                     }
                 }
             }
@@ -92,9 +88,9 @@ class MainActivity : ComponentActivity(), MessageListener {
     }
 
     @Composable
-    fun MessageList(list: List<String>, size: Int) {
+    fun MessageList(list: List<String>?) {
         LazyColumn {
-            items(items = list) { item ->
+            items(items = list ?: listOf()) { item ->
                 Text(item)
             }
         }
