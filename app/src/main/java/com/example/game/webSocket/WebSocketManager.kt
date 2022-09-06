@@ -1,7 +1,6 @@
-package com.example.game
+package com.example.game.webSocket
 
 import android.util.Log
-import com.example.web_socketsample.MessageListener
 import okhttp3.*
 import okio.ByteString
 import java.util.concurrent.TimeUnit

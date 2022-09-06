@@ -1,4 +1,4 @@
-package com.example.web_socketsample
+package com.example.game.webSocket
 
 interface MessageListener {
     fun  onConnectSuccess () // successfully connected
