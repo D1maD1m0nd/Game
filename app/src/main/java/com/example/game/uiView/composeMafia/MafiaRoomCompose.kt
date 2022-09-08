@@ -54,7 +54,7 @@ class MafiaRoomCompose(private val metrics: DisplayMetrics, private val context 
         }
     }
 
-    private var role = Role.PEACE
+    private var role = Role.MAFIA
     private val viewModel : ViewModelMafiaRoomCompose = ViewModelMafiaRoomCompose()
 
     fun controlViewModel() {
@@ -62,10 +62,10 @@ class MafiaRoomCompose(private val metrics: DisplayMetrics, private val context 
         viewModel.showContent()
     }
 
-    override fun onConnectSuccess()       { addText( " Connected successfully \n " ) }
-    override fun onConnectFailed()        { addText( " Connection failed \n " ) }
-    override fun onClose()                { addText( " Closed successfully \n " ) }
-    override fun onMessage(text: String?) { addText( " Receive message: $text \n " ) }
+    override fun onConnectSuccess()       { addText( "Connected successfully") }
+    override fun onConnectFailed()        { addText( "Connection failed") }
+    override fun onClose()                { addText( "Closed successfully") }
+    override fun onMessage(text: String?) { addText( "$text") }
 
     private fun addText(text: String) {
         CoroutineScope(Dispatchers.Main).launch {
@@ -298,7 +298,7 @@ class MafiaRoomCompose(private val metrics: DisplayMetrics, private val context 
         }
 
         val startValue = 0F
-        val endValue = 400F
+        val endValue = dpToPix(150).toFloat()
         val parameter = remember { Animatable(startValue) }
 
         LaunchedEffect(true) {
